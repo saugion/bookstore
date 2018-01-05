@@ -34,7 +34,7 @@ public class ShoppingCart implements Serializable {
         this.id = id;
     }
 
-    public BigDecimal getGrandTotal() {
+public BigDecimal getGrandTotal() {
         return GrandTotal;
     }
 

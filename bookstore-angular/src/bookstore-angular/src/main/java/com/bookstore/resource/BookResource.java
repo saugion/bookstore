@@ -1,5 +1,16 @@
 package com.bookstore.resource;
 
+import com.bookstore.domain.Book;
+import com.bookstore.service.BookService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -9,24 +20,6 @@ import java.nio.file.NoSuchFileException;
 import java.nio.file.Paths;
 import java.util.Iterator;
 import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
-
-import com.bookstore.domain.Book;
-import com.bookstore.service.BookService;
 
 @RestController
 @RequestMapping("/book")
@@ -118,5 +111,12 @@ public class BookResource {
 		}
 		
 		return new ResponseEntity("Remove Success!", HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/searchBook", method = RequestMethod.POST)
+	public List<Book> searchBook(@RequestBody String keyword) {
+		List<Book> bookList = bookService.blurrySearch(keyword);
+
+		return bookList;
 	}
 }
